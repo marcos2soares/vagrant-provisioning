@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fruta-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx-prod"
+spec:
+  rules:
+    - host: abacate.kubeprd.msdigital.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: abacate-service
+                port: 
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific
+    - host: banana.kubeprd.msdigital.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: banana-service
+                port: 
+                  number: 80
+            path: /
+            pathType: ImplementationSpecific

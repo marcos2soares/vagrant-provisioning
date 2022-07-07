@@ -1,0 +1,33 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: banana-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 5678
+  selector:
+    app: banana-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banana-deploy
+spec:
+  selector:
+    matchLabels:
+      app: banana-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: banana-app
+    spec:
+      containers:
+      - name: banana-pod
+        image: hashicorp/http-echo
+        args:
+        - "-text=banana"
+        ports:
+        - containerPort: 5678

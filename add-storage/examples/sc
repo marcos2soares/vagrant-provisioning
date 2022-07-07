@@ -1,0 +1,9 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: teste
+provisioner: driver.longhorn.io
+parameters:
+  numberOfReplicas: "2"
+  staleReplicaTimeout: "480" # 8 hours in minutes
+  nodeSelector: "storage"

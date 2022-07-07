@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ labels:
+   app: joiceprd
+   environment: prod
+ name: joiceprd
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: joiceprd
+   environment: prod
+ template:
+  metadata:
+   labels:
+    app: joiceprd
+    environment: prod
+  spec:
+   containers:
+   - name: volume-test
+     image: nginx:stable-alpine
+     imagePullPolicy: IfNotPresent
+     livenessProbe:
+       exec:
+         command:
+           - ls
+           - /data
+       initialDelaySeconds: 5
+       periodSeconds: 5
+     volumeMounts:
+     - name: volv
+       mountPath: /data
+     ports:
+     - containerPort: 80
+   volumes:
+   - name: volv
+     persistentVolumeClaim:
+       claimName: carlosrwo

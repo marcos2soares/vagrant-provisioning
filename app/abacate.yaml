@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: abacate-service
+spec:
+  ports:
+  - port: 80
+    targetPort: 5678
+  selector:
+    app: abacate-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abacate-deploy
+spec:
+  selector:
+    matchLabels:
+      app: abacate-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: abacate-app
+    spec:
+      containers:
+      - name: abacate-pod
+        image: hashicorp/http-echo
+        args:
+        - "-text=abacate"
+        ports:
+        - containerPort: 5678
